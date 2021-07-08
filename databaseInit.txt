@@ -1,0 +1,14 @@
+--创建数据库(MySql)
+create database crm
+--创建sys_user表
+use crm
+create table sys_user
+(
+	uid int primary key AUTO_INCREMENT not null,
+	userName varchar(50) not null,	
+	pwd varchar(255) not null,
+	nickName varchar(50),
+	phone varchar(50),
+	email varchar(50),
+	userPic text
+)
