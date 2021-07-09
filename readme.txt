@@ -1,9 +1,9 @@
 基于NodeJS实现的crm接口服务
 项目技术栈：
-框架: express@4.17.1
-数据库：mysql@2.18.1
-密码加密: bcryptjs@2.4.3
-表单校验: @hapi/joi@17.1.0 @escook/express-joi@1.0.0
+框架: express
+数据库：mysql
+密码加密: bcryptjs
+表单校验: @hapi/joi @escook/express-joi
 身份认证: jsonwebtoken express-jwt
 
 

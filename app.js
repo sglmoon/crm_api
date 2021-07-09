@@ -1,6 +1,8 @@
 const express = require('express')
 const app = express()
 const joi = require('@hapi/joi')
+const config = require('./config')
+const expressJWT = require('express-jwt')
 
 //处理跨域，使用cors注册全局中间件
 const cors = require('cors')
@@ -21,21 +23,23 @@ app.use((req, res, next) => {
     next()
 })
 
+//jwt权限校验，除/api/auth下所有请求都会进行权限校验，注：静态文件托管要在此之前注册
+app.use(expressJWT({ secret: config.jwtSecretKey }).unless({ path: [/^\/api\/auth/] }))
+
 //挂载路由
-const userRouter = require('./router/user.js')
+const authRouter = require('./router/auth')
+app.use('/api/auth', authRouter)
+const userRouter = require('./router/user')
 app.use('/api/user', userRouter)
 
 // 全局错误处理机制
-
 app.use((err, req, res, next) => {
     //token解析失败
     if (err.name === 'UnauthorizedError') {
-        return res.msg('无效的token')
-    }
-
+        return res.msg('身份认证失败！', 401)
+    };
     // 数据验证失败 
-    if (err instanceof joi.ValidationError) return res.msg(err)
-
+    if (err instanceof joi.ValidationError) return res.msg(err);
     // 未知错误 
     res.msg(err)
 })

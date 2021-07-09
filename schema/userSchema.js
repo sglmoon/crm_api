@@ -10,19 +10,42 @@ const joi = require('@hapi/joi')
  */
 
 //用户名校验规则
-const userName = joi.string().alphanum().min(3).max(18).required()
-
+const userName = joi.string().alphanum().min(3).max(18).required();
 //密码校验规则
-const pwd = joi
-    .string()
-    .pattern(/^[\S]{6,12}$/)
-    .required()
+const pwd = joi.string().pattern(/^[\S]{6,12}$/).required();
+//uid,昵称，邮箱
+const uid = joi.number().integer().min(1).required()
+const nickName = joi.string().min(1).max(8).required()
+const email = joi.string().email().required().required();
+//图像，dataUri校验url地址或者base64串
+const avatar = joi.string().dataUri().required()
 
 //向外导出注册和登录的校验规则对象
 exports.reg_login_schema = {
     //设置body属性，注册@escook/express-joi中间件时会自动对req.body中的数据进行验证
     body: {
         userName,
-        pwd
+        pwd,
+    },
+}
+
+exports.user_update_schema = {
+    body: {
+        uid,
+        nickName,
+        email,
+    },
+}
+
+exports.user_updatePwd_schema = {
+    body: {
+        pwd,
+        newPwd: joi.not(joi.ref('pwd')).concat(pwd)
+    }
+}
+
+exports.user_updateAvatar_schema = {
+    body: {
+        avatar
     }
 }
