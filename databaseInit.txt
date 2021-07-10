@@ -12,3 +12,27 @@ create table sys_user
 	email varchar(50),
 	userPic text
 )
+--创建文章类别表
+create table sys_articleCate
+(
+	uid int primary key AUTO_INCREMENT not null,
+	parentId int,	
+	name varchar(255) not null,	
+    sort int(11),	
+	isDelete int(11) NOT NULL DEFAULT 0,
+	createDate datetime
+)
+--创建文章表
+create table crm_article(
+	uid int primary key AUTO_INCREMENT not null,
+	cateId int,	
+	status int,
+	authorId int,
+	title varchar(255) not null,
+	content text,
+	coverUrl varchar(255),
+	publishDate datetime,
+    sort int(11),	
+	isDelete int(11) NOT NULL DEFAULT 0,
+	createDate datetime
+)

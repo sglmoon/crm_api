@@ -8,8 +8,13 @@ const expressJWT = require('express-jwt')
 const cors = require('cors')
 app.use(cors())
 
+//托管静态资源
+app.use('/uploads', express.static('./uploads'))
+
 //处理表单数据,application/x-www-form-urlencoded
-app.use(express.urlencoded({ extended: false }))
+app.use(express.urlencoded({ extended: false }));
+//处理 application/json数据
+app.use(express.json())
 
 //注册响应消息中间件
 app.use((req, res, next) => {
@@ -31,6 +36,10 @@ const authRouter = require('./router/auth')
 app.use('/api/auth', authRouter)
 const userRouter = require('./router/user')
 app.use('/api/user', userRouter)
+const articleCateRouter = require('./router/articleCate')
+app.use('/api/articleCate', articleCateRouter)
+const articleRouter = require('./router/article')
+app.use('/api/article', articleRouter)
 
 // 全局错误处理机制
 app.use((err, req, res, next) => {

@@ -5,9 +5,11 @@
 密码加密: bcryptjs
 表单校验: @hapi/joi @escook/express-joi
 身份认证: jsonwebtoken express-jwt
-
+文件上传：multer
 
 接口响应数据结构：json对象格式
-code: 1成功，0失败
-msg: 提示信息
-data: 数据
+{
+    code: 1成功，0失败
+    msg: 提示信息
+    data: 数据
+}
